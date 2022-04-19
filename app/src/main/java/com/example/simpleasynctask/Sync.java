@@ -7,16 +7,21 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class Sync  extends AsyncTask<Void,Integer,Void> {
+public class Sync  extends AsyncTask<Void,Integer,String> {
     Context context;
     Button button;
     TextView textView;
-    ProgressDialog progressDialog;
+    ProgressBar progressBar;
+    Sync(Context context, TextView textView, Button button){
+        this.context = context;
+        this.button = button;
+        this.textView = textView;
+    }
 
 
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(Void... voids) {
         int i = 0;
         synchronized (this) {
             while (i < 10) {
@@ -29,27 +34,29 @@ public class Sync  extends AsyncTask<Void,Integer,Void> {
                 }
             }
         }
-        return null;
+        return "Sleep";
     }
 
     @Override
     protected void onPreExecute() {
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("Working...");
-        progressDialog.setMax(100);
-        progressDialog.setProgress(0);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.show();
+        progressBar = new ProgressBar(context);
+        //progressBar.setTitle("Working...");
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
+        //progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     }
 
     @Override
-    protected void onPostExecute(Void unused) {
-        super.onPostExecute(unused);
+    protected void onPostExecute(String result) {
+        textView.setText(result);
+        button.setEnabled(true);
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
+    protected void onProgressUpdate(Integer... values) {
+        int progress = values[0];
+        progressBar.setProgress(progress);
+        textView.setText("Working...");
     }
 
 

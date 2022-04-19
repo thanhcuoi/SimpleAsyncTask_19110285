@@ -27,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int current = progressBar.getProgress();
-                if (current >= progressBar.getMax()) {
-                    current = 0;
-                }
-                progressBar.setProgress(current + 10);
+                Sync sync = new Sync(MainActivity.this,textView,button);
+                sync.execute();
+                button.setEnabled(false);
             }
         });
     }
