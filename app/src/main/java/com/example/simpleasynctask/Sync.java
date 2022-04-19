@@ -2,7 +2,10 @@ package com.example.simpleasynctask;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -11,7 +14,7 @@ public class Sync  extends AsyncTask<Void,Integer,String> {
     Context context;
     Button button;
     TextView textView;
-    ProgressBar progressBar;
+    ProgressDialog progressBar;
     Sync(Context context, TextView textView, Button button){
         this.context = context;
         this.button = button;
@@ -39,11 +42,11 @@ public class Sync  extends AsyncTask<Void,Integer,String> {
 
     @Override
     protected void onPreExecute() {
-        progressBar = new ProgressBar(context);
-        //progressBar.setTitle("Working...");
-        progressBar.setMax(100);
+        progressBar = new ProgressDialog(context);
+        progressBar.setTitle("Working...");
+        progressBar.setMax(200);
         progressBar.setProgress(0);
-        //progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     }
 
     @Override
@@ -57,6 +60,7 @@ public class Sync  extends AsyncTask<Void,Integer,String> {
         int progress = values[0];
         progressBar.setProgress(progress);
         textView.setText("Working...");
+
     }
 
 
